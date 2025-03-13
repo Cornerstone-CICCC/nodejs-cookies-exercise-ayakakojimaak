@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
 
 const home = (req: Request, res: Response) => {
-  res.send("Hello world");
+  res.render("home");
 };
 
 const about = (req: Request, res: Response) => {

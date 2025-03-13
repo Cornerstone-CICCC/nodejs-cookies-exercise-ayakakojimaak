@@ -9,4 +9,5 @@ const userRouter = (0, express_1.Router)();
 userRouter.get("/", user_controller_1.default.getAllUsers);
 userRouter.post("/create", user_controller_1.default.createUser);
 userRouter.post("/login", user_controller_1.default.loginUser);
+userRouter.get("/logout", user_controller_1.default.logoutUser);
 exports.default = userRouter;

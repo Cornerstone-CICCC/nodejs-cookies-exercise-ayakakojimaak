@@ -31,31 +31,38 @@ const getAllUsers = (req, res) => {
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, password } = req.body;
     if (!name || !password) {
-        res.status(500).send("Please provide a name and password");
+        res.status(500).redirect("/signup?error=Please provide a name and password");
         return;
     }
     const user = yield user_model_1.default.createUser({ name, password });
     if (!user) {
-        res.status(500).send("User already exists");
+        res.status(500).redirect("/signup?error=User already exists");
         return;
     }
     else {
-        res.status(201).send(user);
+        res.status(201).redirect("/login");
     }
 });
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, password } = req.body;
     if (!name || !password) {
-        res.status(500).render("login", { err: "Please provide a name and password" });
+        res.status(400).redirect("/login?error=Please provide a name and password");
         return;
     }
-    const user = yield user_model_1.default.createUser({ name, password });
+    const user = yield user_model_1.default.loginUser({ name, password });
     if (!user) {
-        res.status(500).render("login", { err: "User already exists" });
+        res.status(401).redirect("/login?error=Invalid username or password");
         return;
     }
     else {
-        res.status(301).redirect("member");
+        req.session.userId = user.id;
+        req.session.userName = user.name;
+        req.session.isLoggedIn = true;
+        res.status(301).redirect("/member");
     }
 });
-exports.default = { getAllUsers, createUser, loginUser };
+const logoutUser = (req, res) => {
+    req.session = undefined;
+    res.status(301).redirect("/login");
+};
+exports.default = { getAllUsers, createUser, loginUser, logoutUser };

@@ -3,16 +3,12 @@ import bcrypt from "bcrypt";
 import type { User } from "../types/user";
 
 class UserModel {
+  private defaultPassword = bcrypt.hashSync("12345", 10);
   private users: User[] = [
     {
       id: uuidv4(),
       name: "John",
-      password: "12345",
-    },
-    {
-      id: uuidv4(),
-      name: "Jane",
-      password: "67890",
+      password: this.defaultPassword,
     },
   ];
   getAllUsers() {
@@ -31,11 +27,16 @@ class UserModel {
     this.users.push(user);
     return user;
   }
+
   loginUser(user: Omit<User, "id">) {
     const { name, password } = user;
     const userExists = this.users.findIndex((u) => u.name === name);
-    const isMatch = bcrypt.compareSync(password, user.password);
-    if (userExists === -1 || !isMatch) return false;
+    if (userExists === -1) return false;
+
+    const isMatch = bcrypt.compareSync(password, this.users[userExists].password);
+    if (!isMatch) return false;
+
+    return this.users[userExists];
   }
 }
 
