@@ -2,7 +2,8 @@ import express, { Response, Request } from "express";
 import path from "path";
 import cookiesSession from "cookie-session";
 import dotenv from "dotenv";
-import pageRouter from "./routes/page.routes";
+import pageRouter from "./routes/page.route";
+import userRouter from "./routes/user.route";
 dotenv.config();
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Router
+app.use("/user", userRouter);
 app.use("/", pageRouter);
 
 // Fall back

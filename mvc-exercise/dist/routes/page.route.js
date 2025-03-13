@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const page_controllers_1 = __importDefault(require("../controllers/page.controllers"));
+const page_controller_1 = __importDefault(require("../controllers/page.controller"));
 const pageRouter = (0, express_1.Router)();
-pageRouter.get("/", page_controllers_1.default.home);
-pageRouter.get("/about", page_controllers_1.default.about);
+pageRouter.get("/", page_controller_1.default.home);
+pageRouter.get("/about", page_controller_1.default.about);
 exports.default = pageRouter;
