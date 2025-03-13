@@ -6,4 +6,13 @@ const home = (req, res) => {
 const about = (req, res) => {
     res.send("About page");
 };
-exports.default = { home, about };
+const signup = (req, res) => {
+    res.render("signup");
+};
+const member = (req, res) => {
+    res.render("member");
+};
+const login = (req, res) => {
+    res.render("login");
+};
+exports.default = { home, about, signup, member, login };

@@ -11,12 +11,12 @@ const user_route_1 = __importDefault(require("./routes/user.route"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 // Middleware
-app.set("views engine", "ejs");
-app.set("views", path_1.default.join(__dirname, "views"));
+app.set("view engine", "ejs"); // Set view engine to EJS
+app.set("views", path_1.default.join(__dirname, "../src/views")); // EJS templates location
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 // Router
-app.use("/user", user_route_1.default);
+app.use("/api/user", user_route_1.default);
 app.use("/", page_route_1.default);
 // Fall back
 app.use((req, res) => {
